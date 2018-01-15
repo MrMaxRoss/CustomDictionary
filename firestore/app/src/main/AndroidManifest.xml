@@ -19,7 +19,10 @@
         </activity>
 
         <activity
-            android:name=".RestaurantDetailActivity"
+            android:name=".DictionaryDetailActivity"
+            android:theme="@style/AppTheme.Activity" />
+        <activity
+            android:name=".WordDetailActivity"
             android:theme="@style/AppTheme.Activity" />
     </application>
 
