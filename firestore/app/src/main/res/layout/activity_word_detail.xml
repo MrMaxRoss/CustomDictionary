@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0E0"
+    tools:context="com.google.firebase.example.fireeats.WordDetailActivity">
+
+    <RelativeLayout
+        android:id="@+id/word_top_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <ImageView
+            android:id="@+id/word_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:alpha="1.0"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/food_1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/gradient_up" />
+
+        <!-- Back button -->
+        <ImageView
+            android:id="@+id/word_button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:layout_alignLeft="@+id/word_name"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_close_white_24px" />
+
+        <TextView
+            android:id="@+id/word_name"
+            style="@style/AppTheme.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_above="@+id/word_owner"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:text="Blarg" />
+
+        <TextView
+            android:id="@+id/word_part_of_speech"
+            style="@style/AppTheme.Body1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_toRightOf="@id/word_name"
+            android:layout_alignBottom="@id/word_name"
+            tools:text="(adjective)" />
+
+        <TextView
+            android:id="@+id/word_owner_owned_by"
+            style="@style/AppTheme.Subheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/word_image"
+            android:layout_alignLeft="@+id/word_name"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:text="@string/message_word_owned_by"
+            tools:text="Owned By" />
+
+        <TextView
+            android:id="@+id/word_owner"
+            style="@style/AppTheme.Subheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/word_image"
+            android:layout_toRightOf="@+id/word_owner_owned_by"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            tools:text="Max Ross" />
+
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_show_word_edit_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/word_top_card"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-28dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        app:srcCompat="@drawable/ic_edit_white_24px" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_delete_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/word_top_card"
+        android:layout_marginBottom="-28dp"
+        android:layout_toLeftOf="@id/fab_show_word_edit_dialog"
+        app:srcCompat="@drawable/ic_delete_white_24px" />
+
+    <TextView
+        android:id="@+id/word_definition"
+        style="@style/AppTheme.Subheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/word_top_card"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="26dp"
+        android:textColor="@color/greyPrimary"
+        tools:text="The noise someone makes when a cat suddenly lands on their face." />
+
+    <View
+        android:id="@+id/word_example_sentence_divider"
+        style="@style/AppTheme.Divider"
+        android:layout_below="@id/word_definition"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/word_example_sentence_label"
+        style="@style/AppTheme.Subheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_example_sentence_divider"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_alignLeft="@id/word_definition"
+        android:textColor="@color/greyPrimary"
+        android:text="@string/message_word_example_sentence"
+        tools:text="Example:" />
+
+    <TextView
+        android:id="@+id/word_example_sentence"
+        style="@style/AppTheme.Subheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_example_sentence_label"
+        android:layout_alignLeft="@id/word_example_sentence_label"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/greyPrimary"
+        tools:text="'Blarg! said the man as the cat landed on his face." />
+
+
+</RelativeLayout>

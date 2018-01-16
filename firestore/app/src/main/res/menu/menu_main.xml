@@ -7,8 +7,8 @@
         android:title="@string/sign_out" />
 
     <item
-        android:id="@+id/menu_add_items"
-        android:title="@string/add_random_items" />
+        android:id="@+id/menu_add_dictionaries"
+        android:title="@string/add_random_dictionaries" />
 
     <item
         android:id="@+id/menu_delete"

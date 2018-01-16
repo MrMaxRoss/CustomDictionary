@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <View
+        android:id="@+id/word_divider"
+        style="@style/AppTheme.Divider"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/word_item_name"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_divider"
+        android:textColor="@color/greySecondary"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:maxWidth="120dp"
+        android:layout_alignParentLeft="true"
+        tools:text="Blarg" />
+
+    <TextView
+        android:id="@+id/word_item_divider1"
+        style="@style/AppTheme.TextDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_divider"
+        android:layout_toRightOf="@+id/word_item_name"
+        android:text="@string/divider_bullet" />
+
+    <TextView
+        android:id="@+id/word_item_part_of_speech"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_divider"
+        android:textColor="@color/greySecondary"
+        android:layout_toRightOf="@+id/word_item_divider1"
+        tools:text="adjective" />
+
+    <TextView
+        android:id="@+id/word_item_divider2"
+        style="@style/AppTheme.TextDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_divider"
+        android:layout_toRightOf="@+id/word_item_part_of_speech"
+        android:text="@string/divider_bullet" />
+
+    <TextView
+        android:id="@+id/word_item_owner_owned_by"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_divider"
+        android:textColor="@color/greySecondary"
+        android:layout_toRightOf="@+id/word_item_divider2"
+        android:text="@string/message_word_owned_by"
+        tools:text="By" />
+
+    <TextView
+        android:id="@+id/word_item_owner"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_divider"
+        android:textColor="@color/greySecondary"
+        android:layout_toRightOf="@id/word_item_owner_owned_by"
+        android:layout_marginLeft="4dp"
+        tools:text="Max Ross" />
+
+
+</RelativeLayout>

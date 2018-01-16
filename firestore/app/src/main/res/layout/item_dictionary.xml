@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/dictionary_item_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="#757575"
+        android:scaleType="centerCrop"
+        android:src="@drawable/food_1"
+        android:contentDescription="@string/dictionary_item_image_content_desc" />
+
+    <TextView
+        android:id="@+id/dictionary_item_title"
+        style="@style/AppTheme.Subheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/dictionary_item_image"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="-2dp"
+        android:layout_toEndOf="@+id/dictionary_item_image"
+        android:layout_toRightOf="@+id/dictionary_item_image"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="Fresh Dictionary" />
+
+    <TextView
+        android:id="@+id/dictionary_item_num_words"
+        style="@style/AppTheme.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dictionary_item_title"
+        android:layout_alignTop="@+id/dictionary_item_title"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@+id/dictionary_item_title"
+        android:gravity="center_vertical"
+        android:textColor="@color/greyDisabled"
+        tools:text="(10 words)" />
+
+    <TextView
+        android:id="@+id/dictionary_item_owner_label"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/dictionary_item_image"
+        android:layout_toRightOf="@+id/dictionary_item_image"
+        android:layout_below="@+id/dictionary_item_title"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/greySecondary"
+        android:text="@string/message_dictionary_owned_by"
+        tools:text="Owned by" />
+
+    <TextView
+        android:id="@+id/dictionary_item_owner"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/dictionary_item_owner_label"
+        android:layout_toRightOf="@+id/dictionary_item_owner_label"
+        android:layout_below="@+id/dictionary_item_title"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/greySecondary"
+        tools:text="Max" />
+
+    <TextView
+        android:id="@+id/dictionary_item_last_updater_label"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/dictionary_item_image"
+        android:layout_toRightOf="@+id/dictionary_item_image"
+        android:layout_below="@+id/dictionary_item_owner"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/greySecondary"
+        android:text="@string/message_dictionary_last_updater"
+        tools:text="Last updated by" />
+
+    <TextView
+        android:id="@+id/dictionary_item_last_updater"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/dictionary_item_last_updater_label"
+        android:layout_toRightOf="@+id/dictionary_item_last_updater_label"
+        android:layout_below="@+id/dictionary_item_owner"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/greySecondary"
+        tools:text="Max" />
+
+</RelativeLayout>

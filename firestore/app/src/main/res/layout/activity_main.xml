@@ -27,7 +27,7 @@
         android:background="?attr/colorPrimary"
         android:paddingBottom="12dp"
         android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+        android:paddingRight="66dp">
 
         <android.support.v7.widget.CardView
             android:id="@+id/filter_bar"
@@ -67,7 +67,7 @@
                         style="@style/AppTheme.Body1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/all_restaurants"
+                        android:text="@string/all_dictionaries"
                         android:textColor="@color/greySecondary"
                         tools:text="Filter" />
 
@@ -76,7 +76,7 @@
                         style="@style/AppTheme.Caption"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/sorted_by_rating"
+                        android:text="@string/sort_by_dictionary_title"
                         android:textColor="@color/greyDisabled" />
 
                 </LinearLayout>
@@ -94,17 +94,26 @@
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
-
     </FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_create_dictionary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-66dp"
+        android:layout_marginBottom="-28dp"
+        android:layout_marginRight="4dp"
+        android:layout_below="@id/filter_bar_container"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@drawable/ic_add_white_24px" />
 
-    <!-- Main Restaurants recycler -->
+    <!-- Main Dictionaries recycler -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_restaurants"
+        android:id="@+id/recycler_dictionaries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/filter_bar_container"
         android:background="@android:color/white"
-        tools:listitem="@layout/item_restaurant" />
+        tools:listitem="@layout/item_dictionary" />
 
     <!-- Shadow below toolbar -->
     <View
@@ -144,8 +153,8 @@
         android:id="@+id/progress_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/recycler_restaurants"
-        android:layout_alignTop="@+id/recycler_restaurants"
+        android:layout_alignBottom="@+id/recycler_dictionaries"
+        android:layout_alignTop="@+id/recycler_dictionaries"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
 

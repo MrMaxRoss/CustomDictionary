@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0E0"
+    tools:context="com.google.firebase.example.fireeats.DictionaryDetailActivity">
+
+    <RelativeLayout
+        android:id="@+id/dictionary_top_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <ImageView
+            android:id="@+id/dictionary_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:alpha="1.0"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/food_1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/gradient_up" />
+
+        <!-- Back button -->
+        <ImageView
+            android:id="@+id/dictionary_button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:layout_alignLeft="@+id/dictionary_title"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_close_white_24px" />
+
+        <TextView
+            android:id="@+id/dictionary_title"
+            style="@style/AppTheme.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_above="@+id/dictionary_owner"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:text="Some dictionary" />
+
+        <TextView
+            android:id="@+id/dictionary_owner_owned_by"
+            style="@style/AppTheme.Subheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/dictionary_image"
+            android:layout_alignLeft="@+id/dictionary_title"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:text="@string/message_dictionary_owned_by"
+            tools:text="Owned By" />
+
+        <TextView
+            android:id="@+id/dictionary_owner"
+            style="@style/AppTheme.Subheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/dictionary_image"
+            android:layout_toRightOf="@+id/dictionary_owner_owned_by"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            tools:text="Max Ross" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_show_word_create_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dictionary_top_card"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-28dp"
+        android:layout_marginRight="16dp"
+        app:srcCompat="@drawable/ic_add_white_24px" />
+
+    <!-- Words -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_words"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dictionary_top_card"
+        android:background="@android:color/transparent"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:paddingTop="28dp"
+        android:visibility="gone"
+        tools:listitem="@layout/item_word" />
+
+    <!-- View for empty words -->
+    <LinearLayout
+        android:id="@+id/view_empty_words"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/dictionary_top_card"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:src="@drawable/pizza_monster"
+            style="@style/AppTheme.PizzaGuy" />
+
+        <TextView
+            style="@style/AppTheme.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_no_words"
+            android:textColor="@color/greyDisabled" />
+
+    </LinearLayout>
+
+</RelativeLayout>

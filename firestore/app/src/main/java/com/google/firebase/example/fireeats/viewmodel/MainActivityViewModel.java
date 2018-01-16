@@ -2,7 +2,7 @@ package com.google.firebase.example.fireeats.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 
-import com.google.firebase.example.fireeats.Filters;
+import com.google.firebase.example.fireeats.DictionaryFilters;
 
 /**
  * ViewModel for {@link com.google.firebase.example.fireeats.MainActivity}.
@@ -11,11 +11,11 @@ import com.google.firebase.example.fireeats.Filters;
 public class MainActivityViewModel extends ViewModel {
 
     private boolean mIsSigningIn;
-    private Filters mFilters;
+    private DictionaryFilters mFilters;
 
     public MainActivityViewModel() {
         mIsSigningIn = false;
-        mFilters = Filters.getDefault();
+        mFilters = DictionaryFilters.getDefault();
     }
 
     public boolean getIsSigningIn() {
@@ -26,11 +26,11 @@ public class MainActivityViewModel extends ViewModel {
         this.mIsSigningIn = mIsSigningIn;
     }
 
-    public Filters getFilters() {
+    public DictionaryFilters getFilters() {
         return mFilters;
     }
 
-    public void setFilters(Filters mFilters) {
+    public void setFilters(DictionaryFilters mFilters) {
         this.mFilters = mFilters;
     }
 }

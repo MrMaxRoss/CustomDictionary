@@ -19,13 +19,15 @@ import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.example.fireeats.adapter.RestaurantAdapter;
-import com.google.firebase.example.fireeats.model.Rating;
-import com.google.firebase.example.fireeats.model.Restaurant;
-import com.google.firebase.example.fireeats.util.RatingUtil;
-import com.google.firebase.example.fireeats.util.RestaurantUtil;
+import com.google.firebase.example.fireeats.adapter.DictionaryAdapter;
+import com.google.firebase.example.fireeats.model.CustomDictionary;
+import com.google.firebase.example.fireeats.model.Word;
+import com.google.firebase.example.fireeats.util.ActivityUtil;
+import com.google.firebase.example.fireeats.util.DictionaryUtil;
 import com.google.firebase.example.fireeats.viewmodel.MainActivityViewModel;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,15 +37,16 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements
-        FilterDialogFragment.FilterListener,
-        RestaurantAdapter.OnRestaurantSelectedListener {
+        DictionaryFilterDialogFragment.FilterListener,
+        DictionaryAdapter.OnDictionarySelectedListener,
+        DictionaryDialogCreateFragment.DictionaryListener {
 
     private static final String TAG = "MainActivity";
 
@@ -60,17 +63,19 @@ public class MainActivity extends AppCompatActivity implements
     @BindView(R.id.text_current_sort_by)
     TextView mCurrentSortByView;
 
-    @BindView(R.id.recycler_restaurants)
-    RecyclerView mRestaurantsRecycler;
+    @BindView(R.id.recycler_dictionaries)
+    RecyclerView mDictionariesRecycler;
 
     @BindView(R.id.view_empty)
     ViewGroup mEmptyView;
 
+    DictionaryDialogCreateFragment mDictionaryCreateFragment;
+
     private FirebaseFirestore mFirestore;
     private Query mQuery;
 
-    private FilterDialogFragment mFilterDialog;
-    private RestaurantAdapter mAdapter;
+    private DictionaryFilterDialogFragment mFilterDialog;
+    private DictionaryAdapter mAdapter;
 
     private MainActivityViewModel mViewModel;
 
@@ -90,21 +95,21 @@ public class MainActivity extends AppCompatActivity implements
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
-        // Get ${LIMIT} restaurants
-        mQuery = mFirestore.collection("restaurants")
-                .orderBy("avgRating", Query.Direction.DESCENDING)
+        // Get ${LIMIT} dictionaries
+        mQuery = mFirestore.collection("dictionaries")
+                .orderBy("title", Query.Direction.ASCENDING)
                 .limit(LIMIT);
 
         // RecyclerView
-        mAdapter = new RestaurantAdapter(mQuery, this) {
+        mAdapter = new DictionaryAdapter(mQuery, this) {
             @Override
             protected void onDataChanged() {
                 // Show/hide content if the query returns empty.
                 if (getItemCount() == 0) {
-                    mRestaurantsRecycler.setVisibility(View.GONE);
+                    mDictionariesRecycler.setVisibility(View.GONE);
                     mEmptyView.setVisibility(View.VISIBLE);
                 } else {
-                    mRestaurantsRecycler.setVisibility(View.VISIBLE);
+                    mDictionariesRecycler.setVisibility(View.VISIBLE);
                     mEmptyView.setVisibility(View.GONE);
                 }
             }
@@ -117,11 +122,12 @@ public class MainActivity extends AppCompatActivity implements
             }
         };
 
-        mRestaurantsRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRestaurantsRecycler.setAdapter(mAdapter);
+        mDictionariesRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mDictionariesRecycler.setAdapter(mAdapter);
 
         // Filter Dialog
-        mFilterDialog = new FilterDialogFragment();
+        mFilterDialog = new DictionaryFilterDialogFragment();
+        mDictionaryCreateFragment = new DictionaryDialogCreateFragment();
     }
 
     @Override
@@ -160,15 +166,15 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_add_items:
-                onAddItemsClicked();
+            case R.id.menu_add_dictionaries:
+                onAddDictionariesClicked();
                 break;
             case R.id.menu_sign_out:
                 AuthUI.getInstance().signOut(this);
                 startSignIn();
                 break;
             case R.id.menu_delete:
-                RestaurantUtil.deleteAll();
+                DictionaryUtil.deleteAll();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -189,44 +195,36 @@ public class MainActivity extends AppCompatActivity implements
     @OnClick(R.id.filter_bar)
     public void onFilterClicked() {
         // Show the dialog containing filter options
-        mFilterDialog.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
+        mFilterDialog.show(getSupportFragmentManager(), DictionaryFilterDialogFragment.TAG);
     }
 
     @OnClick(R.id.button_clear_filter)
     public void onClearFilterClicked() {
         mFilterDialog.resetFilters();
 
-        onFilter(Filters.getDefault());
+        onFilter(DictionaryFilters.getDefault());
     }
 
     @Override
-    public void onRestaurantSelected(DocumentSnapshot restaurant) {
-        // Go to the details page for the selected restaurant
-        Intent intent = new Intent(this, RestaurantDetailActivity.class);
-        intent.putExtra(RestaurantDetailActivity.KEY_RESTAURANT_ID, restaurant.getId());
+    public void onDictionarySelected(DocumentSnapshot dict) {
+        // Go to the details page for the selected dictionary
+        Intent intent = new Intent(this, DictionaryDetailActivity.class);
+        intent.putExtra(DictionaryDetailActivity.KEY_DICTIONARY_ID, dict.getId());
 
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
 
     @Override
-    public void onFilter(Filters filters) {
+    public void onFilter(DictionaryFilters filters) {
         // Construct query basic query
-        Query query = mFirestore.collection("restaurants");
+        Query query = mFirestore.collection("dictionaries");
 
-        // Category (equality filter)
-        if (filters.hasCategory()) {
-            query = query.whereEqualTo(Restaurant.FIELD_CATEGORY, filters.getCategory());
-        }
-
-        // City (equality filter)
-        if (filters.hasCity()) {
-            query = query.whereEqualTo(Restaurant.FIELD_CITY, filters.getCity());
-        }
-
-        // Price (equality filter)
-        if (filters.hasPrice()) {
-            query = query.whereEqualTo(Restaurant.FIELD_PRICE, filters.getPrice());
+        // Equality filters on owner or last updater
+        if (filters.hasOwner()) {
+            query = query.whereEqualTo(CustomDictionary.FIELD_OWNER, filters.getOwner());
+        } else if (filters.hasLastUpdater()) {
+            query = query.whereEqualTo(CustomDictionary.FIELD_LAST_UPDATER, filters.getLastUpdater());
         }
 
         // Sort by (orderBy with direction)
@@ -264,23 +262,20 @@ public class MainActivity extends AppCompatActivity implements
         mViewModel.setIsSigningIn(true);
     }
 
-    private void onAddItemsClicked() {
-        // Add a bunch of random restaurants
+    private void onAddDictionariesClicked() {
+        // Add a bunch of dictionaries
         WriteBatch batch = mFirestore.batch();
         for (int i = 0; i < 10; i++) {
-            DocumentReference restRef = mFirestore.collection("restaurants").document();
+            // Create random dictionaries and words
+            CustomDictionary randomDictionary = DictionaryUtil.getRandomDictionary(this);
+            DocumentReference dictRef = mFirestore.collection("dictionaries").document(randomDictionary.getName());
 
-            // Create random restaurant / ratings
-            Restaurant randomRestaurant = RestaurantUtil.getRandom(this);
-            List<Rating> randomRatings = RatingUtil.getRandomList(randomRestaurant.getNumRatings());
-            randomRestaurant.setAvgRating(RatingUtil.getAverageRating(randomRatings));
+            // Add dictionary
+            batch.set(dictRef, randomDictionary.toDocumentMap());
 
-            // Add restaurant
-            batch.set(restRef, randomRestaurant);
-
-            // Add ratings to subcollection
-            for (Rating rating : randomRatings) {
-                batch.set(restRef.collection("ratings").document(), rating);
+            // Add words to subcollection
+            for (Word word : randomDictionary.getWordMap().values()) {
+                batch.set(dictRef.collection("words").document(word.getId()), word.toWordMap());
             }
         }
 
@@ -294,5 +289,40 @@ public class MainActivity extends AppCompatActivity implements
                 }
             }
         });
+    }
+
+    @OnClick(R.id.fab_create_dictionary)
+    public void onCreateDictionaryClicked(View view) {
+        mDictionaryCreateFragment.show(getSupportFragmentManager(), DictionaryDialogCreateFragment.TAG);
+    }
+
+    @Override
+    public void onDictionary(CustomDictionary dict, final DictionaryDialogFragment frag) {
+        DocumentReference dictRef = mFirestore.collection(
+                CustomDictionary.COLLECTION_DICTIONARIES).document(dict.getName());
+        Map<String, Object> dictMap = dict.toDocumentMap();
+        dictRef.set(dictMap)
+                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Dictionary added");
+
+                        // Hide keyboard and scroll to top
+                        ActivityUtil.hideKeyboard(MainActivity.this);
+                        mDictionariesRecycler.smoothScrollToPosition(0);
+                        frag.onSuccess();
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Add dictionary failed", e);
+
+                        // Show failure message and hide keyboard
+                        ActivityUtil.hideKeyboard(MainActivity.this);
+                        Snackbar.make(findViewById(android.R.id.content), "Failed to add dictionary",
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
