@@ -22,7 +22,7 @@ import butterknife.OnClick;
  */
 public class DictionaryFilterDialogFragment extends DialogFragment {
 
-    public static final String TAG = "FilterDialog";
+    public static final String TAG = "DictionaryFilterDialog";
 
     interface FilterListener {
 
@@ -72,7 +72,7 @@ public class DictionaryFilterDialogFragment extends DialogFragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    @OnClick(R.id.button_search)
+    @OnClick(R.id.dictionary_button_search)
     public void onSearchClicked() {
         if (mFilterListener != null) {
             mFilterListener.onFilter(getFilters());
@@ -122,6 +122,7 @@ public class DictionaryFilterDialogFragment extends DialogFragment {
     public void resetFilters() {
         if (mRootView != null) {
             mDictionaryOwner.getText().clear();
+            mDictionaryLastUpdater.getText().clear();
             mSortSpinner.setSelection(0);
         }
     }

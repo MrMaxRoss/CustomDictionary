@@ -220,10 +220,12 @@ public class MainActivity extends AppCompatActivity implements
         // Construct query basic query
         Query query = mFirestore.collection("dictionaries");
 
-        // Equality filters on owner or last updater
+        // Equality filters on owner and last updater
         if (filters.hasOwner()) {
             query = query.whereEqualTo(CustomDictionary.FIELD_OWNER, filters.getOwner());
-        } else if (filters.hasLastUpdater()) {
+        }
+
+        if (filters.hasLastUpdater()) {
             query = query.whereEqualTo(CustomDictionary.FIELD_LAST_UPDATER, filters.getLastUpdater());
         }
 
@@ -268,7 +270,8 @@ public class MainActivity extends AppCompatActivity implements
         for (int i = 0; i < 10; i++) {
             // Create random dictionaries and words
             CustomDictionary randomDictionary = DictionaryUtil.getRandomDictionary(this);
-            DocumentReference dictRef = mFirestore.collection("dictionaries").document(randomDictionary.getName());
+            DocumentReference dictRef = mFirestore.collection(
+                    CustomDictionary.COLLECTION_DICTIONARIES).document(randomDictionary.getName());
 
             // Add dictionary
             batch.set(dictRef, randomDictionary.toDocumentMap());

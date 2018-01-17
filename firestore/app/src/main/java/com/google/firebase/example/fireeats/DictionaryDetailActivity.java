@@ -1,6 +1,5 @@
 package com.google.firebase.example.fireeats;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,10 +7,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,7 +29,9 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.Transaction;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +39,8 @@ import butterknife.OnClick;
 
 public class DictionaryDetailActivity extends AppCompatActivity
         implements EventListener<DocumentSnapshot>, WordDialogCreateFragment.WordListener,
-        WordAdapter.OnWordSelectedListener {
+        WordAdapter.OnWordSelectedListener,
+        WordFilterDialogFragment.FilterListener {
 
     private static final String TAG = "DictionaryDetail";
 
@@ -56,6 +58,13 @@ public class DictionaryDetailActivity extends AppCompatActivity
     @BindView(R.id.view_empty_words)
     ViewGroup mEmptyView;
 
+    @BindView(R.id.text_current_word_search)
+    TextView mCurrentSearchView;
+
+    @BindView(R.id.text_current_word_sort_by)
+    TextView mCurrentSortByView;
+
+    WordFilters mFilters = WordFilters.getDefault();
 
     private WordDialogCreateFragment mWordDialog;
 
@@ -64,6 +73,8 @@ public class DictionaryDetailActivity extends AppCompatActivity
     private ListenerRegistration mDictionaryRegistration;
 
     private WordAdapter mWordAdapter;
+    private WordFilterDialogFragment mFilterDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,13 +116,20 @@ public class DictionaryDetailActivity extends AppCompatActivity
         mWordsRecycler.setAdapter(mWordAdapter);
 
         mWordDialog = new WordDialogCreateFragment();
+        mFilterDialog = new WordFilterDialogFragment();
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        mWordAdapter.startListening();
+        onFilter(mFilters);
+
+        // Start listening for Firestore updates
+        if (mWordAdapter != null) {
+            mWordAdapter.startListening();
+        }
         mDictionaryRegistration = mDictionaryRef.addSnapshotListener(this);
     }
 
@@ -228,5 +246,60 @@ public class DictionaryDetailActivity extends AppCompatActivity
 
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    }
+
+    @OnClick(R.id.word_filter_bar)
+    public void onFilterClicked() {
+        // Show the dialog containing filter options
+        mFilterDialog.show(getSupportFragmentManager(), WordFilterDialogFragment.TAG);
+    }
+
+    @OnClick(R.id.button_clear_word_filter)
+    public void onClearFilterClicked() {
+        mFilterDialog.resetFilters();
+
+        onFilter(WordFilters.getDefault());
+    }
+
+
+
+    @Override
+    public void onFilter(WordFilters filters) {
+        // Construct query basic query
+        Query query = mDictionaryRef.collection(CustomDictionary.COLLECTION_WORDS);
+
+        Set<String> equalityFields = new HashSet<>();
+        // Equality filters on owner, last updater, and part of speech
+        if (filters.hasOwner()) {
+            query = query.whereEqualTo(Word.FIELD_OWNER, filters.getOwner());
+            equalityFields.add(Word.FIELD_OWNER);
+        }
+
+        if (filters.hasLastUpdater()) {
+            query = query.whereEqualTo(Word.FIELD_LAST_UPDATER, filters.getLastUpdater());
+            equalityFields.add(Word.FIELD_LAST_UPDATER);
+        }
+
+        if (filters.hasPartOfSpeech()) {
+            query = query.whereEqualTo(Word.FIELD_PART_OF_SPEECH, filters.getPartOfSpeech().name());
+            equalityFields.add(Word.FIELD_PART_OF_SPEECH);
+        }
+
+        // Sort by (orderBy with direction)
+        // Can't sort by a field that has an equality filter on it, so we find that's the case,
+        // just drop the sort
+        if (filters.hasSortBy() && !equalityFields.contains(filters.getSortBy())) {
+            query = query.orderBy(filters.getSortBy(), filters.getSortDirection());
+        }
+
+        // Update the query
+        mWordAdapter.setQuery(query);
+
+        // Set header
+        mCurrentSearchView.setText(Html.fromHtml(filters.getSearchDescription(this)));
+        mCurrentSortByView.setText(filters.getOrderDescription(this));
+
+        // Save filters
+        mFilters = filters;
     }
 }

@@ -29,6 +29,10 @@ public class CustomDictionary {
 
     }
 
+    public CustomDictionary(String name, String owner, List<Word> words) {
+        this(name, owner, owner, words);
+    }
+
     public CustomDictionary(String name, String owner, String lastUpdater, List<Word> words) {
         this.name = name;
         this.owner = owner;

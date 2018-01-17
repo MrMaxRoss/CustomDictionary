@@ -7,16 +7,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.datatype.DatatypeConstants;
-
 /**
  * Created by maxr on 11/20/17.
  */
 
 public class Word implements Comparable<Word> {
 
-    public static final String FIELD_OWNER = "owner";
     public static final String FIELD_ID = "__name__";
+    public static final String FIELD_OWNER = "owner";
+    public static final String FIELD_LAST_UPDATER = "last_updater";
     public static final String FIELD_DEFINITION = "definition";
     public static final String FIELD_PART_OF_SPEECH = "part_of_speech";
     private static final String FIELD_EXAMPLE_SENTENCE = "example_sentence";
@@ -28,17 +27,23 @@ public class Word implements Comparable<Word> {
     String exampleSentence;
     PartOfSpeech partOfSpeech;
     String owner;
+    String lastUpdater;
 
     public Word() {
     }
 
     public Word(String dictId, String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech, String owner) {
+        this(dictId, id, definition, exampleSentence, partOfSpeech, owner, owner);
+    }
+
+    Word(String dictId, String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech, String owner, String lastUpdater) {
         this.customDictName = dictId;
         this.id = id;
         this.definition = definition;
         this.exampleSentence = exampleSentence;
         this.partOfSpeech = partOfSpeech;
         this.owner = owner;
+        this.lastUpdater = lastUpdater;
     }
 
     public Word(String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech, String owner) {
@@ -93,6 +98,14 @@ public class Word implements Comparable<Word> {
         this.owner = owner;
     }
 
+    public String getLastUpdater() {
+        return lastUpdater;
+    }
+
+    public void setLastUpdater(String lastUpdater) {
+        this.lastUpdater = lastUpdater;
+    }
+
     @Override
     public String toString() {
         return "Word{" +
@@ -102,6 +115,7 @@ public class Word implements Comparable<Word> {
                 ", exampleSentence='" + exampleSentence + '\'' +
                 ", partOfSpeech=" + partOfSpeech +
                 ", owner='" + owner + '\'' +
+                ", lastUpdater='" + lastUpdater + '\'' +
                 '}';
     }
 
@@ -113,6 +127,7 @@ public class Word implements Comparable<Word> {
     public Map<String, Object> toWordMap() {
         Map<String, Object> map = new HashMap<>();
         map.put(FIELD_OWNER, getOwner());
+        map.put(FIELD_LAST_UPDATER, getLastUpdater());
         map.put(FIELD_PART_OF_SPEECH, getPartOfSpeech().name());
         map.put(FIELD_DEFINITION, getDefinition());
         map.put(FIELD_EXAMPLE_SENTENCE, getExampleSentence());
@@ -127,7 +142,8 @@ public class Word implements Comparable<Word> {
                 (String) snapshot.get(FIELD_DEFINITION),
                 (String) snapshot.get(FIELD_EXAMPLE_SENTENCE),
                 PartOfSpeech.valueOf((String) snapshot.get(FIELD_PART_OF_SPEECH)),
-                (String) snapshot.get(FIELD_OWNER));
+                (String) snapshot.get(FIELD_OWNER),
+                (String) snapshot.get(FIELD_LAST_UPDATER));
 
     }
 }

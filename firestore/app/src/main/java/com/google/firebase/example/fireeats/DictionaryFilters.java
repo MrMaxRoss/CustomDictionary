@@ -68,11 +68,24 @@ public class DictionaryFilters {
     public String getSearchDescription(Context context) {
         StringBuilder desc = new StringBuilder();
 
-        if (owner == null) {
+        if (!hasOwner() && !hasLastUpdater()) {
             desc.append("<b>");
             desc.append(context.getString(R.string.all_dictionaries));
             desc.append("</b>");
         }
+
+        if (hasOwner()) {
+            desc.append(String.format(context.getString(R.string.owned_by_format), owner));
+        }
+
+        if (hasOwner() && hasLastUpdater()) {
+            desc.append(" and ");
+        }
+
+        if (hasLastUpdater()) {
+            desc.append(String.format(context.getString(R.string.last_updated_by_format), lastUpdater));
+        }
+
         return desc.toString();
     }
 

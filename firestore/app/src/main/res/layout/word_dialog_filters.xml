@@ -20,19 +20,19 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/icon_dictionary_owner"
+            android:id="@+id/icon_word_owner"
             style="@style/AppTheme.FilterIcon"
             android:layout_centerVertical="true"
             android:tint="@color/greySecondary"
             app:srcCompat="@drawable/ic_fastfood_white_24dp" />
 
         <EditText
-            android:id="@+id/dictionary_filter_owner"
+            android:id="@+id/word_filter_owner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/icon_dictionary_owner"
-            android:hint="@string/hint_dictionary_filter_owner"/>
+            android:layout_toRightOf="@+id/icon_word_owner"
+            android:hint="@string/hint_word_filter_owner"/>
 
     </RelativeLayout>
 
@@ -42,19 +42,42 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/icon_dictionary_last_updater"
+            android:id="@+id/icon_word_last_updater"
             style="@style/AppTheme.FilterIcon"
             android:layout_centerVertical="true"
             android:tint="@color/greySecondary"
             app:srcCompat="@drawable/ic_fastfood_white_24dp" />
 
         <EditText
-            android:id="@+id/dictionary_filter_last_updater"
+            android:id="@+id/word_filter_last_updater"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/icon_dictionary_last_updater"
-            android:hint="@string/hint_dictionary_filter_last_updater"/>
+            android:layout_toRightOf="@+id/icon_word_last_updater"
+            android:hint="@string/hint_word_filter_last_updater"/>
+
+    </RelativeLayout>
+
+    <!-- Part Of Speech -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/icon_word_part_of_speech"
+            style="@style/AppTheme.FilterIcon"
+            android:layout_centerVertical="true"
+            android:tint="@color/greySecondary"
+            app:srcCompat="@drawable/ic_fastfood_white_24dp" />
+
+        <Spinner
+            android:id="@+id/word_filter_part_of_speech"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/icon_word_part_of_speech"
+            android:entries="@array/parts_of_speech"
+            android:hint="@string/hint_word_part_of_speech" />
 
     </RelativeLayout>
 
@@ -72,11 +95,11 @@
             app:srcCompat="@drawable/ic_sort_white_24px" />
 
         <Spinner
-            android:id="@+id/dictionary_spinner_sort"
+            android:id="@+id/word_spinner_sort"
             style="@style/AppTheme.FilterSpinner"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/icon_sort"
-            android:entries="@array/dictionary_sort_by" />
+            android:entries="@array/word_sort_by" />
     </RelativeLayout>
 
     <!-- Cancel and apply buttons -->
@@ -102,7 +125,7 @@
 
 
         <Button
-            android:id="@+id/dictionary_button_search"
+            android:id="@+id/word_button_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

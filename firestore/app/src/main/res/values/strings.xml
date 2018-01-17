@@ -40,8 +40,10 @@
     <string name="filter_add_review">Add review</string>
     <string name="all_dictionaries">All Dictionaries</string>
     <string name="all_words">All Words</string>
-    <string name="sort_by_word_id">Sorted By Word</string>
-    <string name="sort_by_word_owner">Sorted By Owner</string>
+    <string name="sort_by_word_id">Sort By Word</string>
+    <string name="sort_by_word_owner">Sort By Owner</string>
+    <string name="sort_by_word_last_updater">Sort By Last Updater</string>
+    <string name="sort_by_word_part_of_speech">Sort By Part Of Speech</string>
     <string name="sort_by_dictionary_owner">Sort By Owner</string>
     <string name="sort_by_dictionary_title">Sort By Title</string>
     <string name="sort_by_dictionary_last_updater">Sort By Last Updater</string>
@@ -70,6 +72,12 @@
     <string name="dialog_add_dictionary">Add dictionary</string>
     <string name="hint_dictionary_name">Name</string>
     <string name="hint_dictionary_owner">Owner</string>
+    <string name="hint_word_filter_owner">Owner</string>
+    <string name="hint_word_filter_last_updater">Last Updater</string>
+    <string name="owned_by_format"><![CDATA[Owned by <b>%s</b>]]></string>
+    <string name="last_updated_by_format"><![CDATA[Last updated by <b>%s</b>]]></string>
+    <string name="any_part_of_speech">Any part of speech</string>
+    <string name="part_of_speech_format"><![CDATA[Part of speech is <b>%s</b>]]></string>
 
     <!-- Types of food I could think of in 5 minutes -->
     <string-array name="categories">
@@ -163,6 +171,13 @@
         <item>@string/sort_by_dictionary_owner</item>
         <item>@string/sort_by_dictionary_last_updater</item>
         <item>@string/sort_by_dictionary_title</item>
+    </string-array>
+
+    <string-array name="word_sort_by">
+        <item>@string/sort_by_word_id</item>
+        <item>@string/sort_by_word_owner</item>
+        <item>@string/sort_by_word_last_updater</item>
+        <item>@string/sort_by_word_part_of_speech</item>
     </string-array>
 a
     <string-array name="parts_of_speech">

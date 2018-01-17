@@ -7,7 +7,6 @@ import com.google.firebase.example.fireeats.model.CustomDictionary;
 import com.google.firebase.example.fireeats.model.Word;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,7 +33,6 @@ public class DictionaryDialogCreateFragment extends DictionaryDialogFragment {
     public void onSubmitClicked(View view) {
         CustomDictionary dict = new CustomDictionary(
                 mNameText.getText().toString(),
-                mOwnerText.getText().toString(),
                 mOwnerText.getText().toString(),
                 new ArrayList<Word>());
 
