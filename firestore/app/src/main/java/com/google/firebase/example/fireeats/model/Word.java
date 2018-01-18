@@ -3,7 +3,9 @@ package com.google.firebase.example.fireeats.model;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ public class Word implements Comparable<Word> {
     public static final String FIELD_ID = "__name__";
     public static final String FIELD_OWNER = "owner";
     public static final String FIELD_LAST_UPDATER = "last_updater";
+    public static final String FIELD_LAST_UPDATE = "last_update";
     public static final String FIELD_DEFINITION = "definition";
     public static final String FIELD_PART_OF_SPEECH = "part_of_speech";
     private static final String FIELD_EXAMPLE_SENTENCE = "example_sentence";
@@ -28,15 +31,17 @@ public class Word implements Comparable<Word> {
     PartOfSpeech partOfSpeech;
     String owner;
     String lastUpdater;
+    Date lastUpdate;
 
     public Word() {
     }
 
     public Word(String dictId, String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech, String owner) {
-        this(dictId, id, definition, exampleSentence, partOfSpeech, owner, owner);
+        this(dictId, id, definition, exampleSentence, partOfSpeech, owner, owner, null);
     }
 
-    Word(String dictId, String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech, String owner, String lastUpdater) {
+    Word(String dictId, String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech,
+         String owner, String lastUpdater, Date lastUpdate) {
         this.customDictName = dictId;
         this.id = id;
         this.definition = definition;
@@ -106,6 +111,14 @@ public class Word implements Comparable<Word> {
         this.lastUpdater = lastUpdater;
     }
 
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     @Override
     public String toString() {
         return "Word{" +
@@ -116,6 +129,7 @@ public class Word implements Comparable<Word> {
                 ", partOfSpeech=" + partOfSpeech +
                 ", owner='" + owner + '\'' +
                 ", lastUpdater='" + lastUpdater + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 '}';
     }
 
@@ -124,7 +138,7 @@ public class Word implements Comparable<Word> {
         return getId().compareTo(word.getId());
     }
 
-    public Map<String, Object> toWordMap() {
+    public Map<String, Object> toWordMap(boolean useServerTimestamp) {
         Map<String, Object> map = new HashMap<>();
         map.put(FIELD_OWNER, getOwner());
         map.put(FIELD_LAST_UPDATER, getLastUpdater());
@@ -132,6 +146,12 @@ public class Word implements Comparable<Word> {
         map.put(FIELD_DEFINITION, getDefinition());
         map.put(FIELD_EXAMPLE_SENTENCE, getExampleSentence());
         map.put(FIELD_CUSTOM_DICT_NAME, getCustomDictName());
+
+        if (useServerTimestamp) {
+            map.put(FIELD_LAST_UPDATE, FieldValue.serverTimestamp());
+        } else {
+            map.put(FIELD_LAST_UPDATE, getLastUpdate());
+        }
         return map;
     }
 
@@ -143,7 +163,8 @@ public class Word implements Comparable<Word> {
                 (String) snapshot.get(FIELD_EXAMPLE_SENTENCE),
                 PartOfSpeech.valueOf((String) snapshot.get(FIELD_PART_OF_SPEECH)),
                 (String) snapshot.get(FIELD_OWNER),
-                (String) snapshot.get(FIELD_LAST_UPDATER));
+                (String) snapshot.get(FIELD_LAST_UPDATER),
+                (Date) snapshot.get(FIELD_LAST_UPDATE));
 
     }
 }

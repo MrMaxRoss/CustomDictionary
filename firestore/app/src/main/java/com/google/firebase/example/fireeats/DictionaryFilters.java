@@ -75,7 +75,7 @@ public class DictionaryFilters {
         }
 
         if (hasOwner()) {
-            desc.append(String.format(context.getString(R.string.owned_by_format), owner));
+            desc.append(context.getString(R.string.owned_by_format, owner));
         }
 
         if (hasOwner() && hasLastUpdater()) {
@@ -83,7 +83,7 @@ public class DictionaryFilters {
         }
 
         if (hasLastUpdater()) {
-            desc.append(String.format(context.getString(R.string.last_updated_by_format), lastUpdater));
+            desc.append(context.getString(R.string.last_updated_by_format, lastUpdater));
         }
 
         return desc.toString();

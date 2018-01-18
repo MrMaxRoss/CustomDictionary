@@ -64,7 +64,7 @@
     <string name="sort_by_title">Sort by Title</string>
     <string name="add_random_dictionaries">Add Random Dictionaries</string>
     <string name="message_dictionary_owned_by">By </string>
-    <string name="message_dictionary_last_updater">Last Updater</string>
+    <string name="message_dictionary_last_update_format">Last update by %s on %tD</string>
     <string name="message_word_owned_by">By </string>
     <string name="message_word_example_sentence">Example:</string>
     <string name="message_word_definition">Definition:</string>

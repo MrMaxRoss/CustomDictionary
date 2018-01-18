@@ -1,8 +1,10 @@
 package com.google.firebase.example.fireeats.model;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +19,14 @@ public class CustomDictionary {
     public static final String FIELD_TITLE = "__name__";
     public static final String FIELD_OWNER = "owner";
     public static final String FIELD_LAST_UPDATER = "lastUpdater";
+    public static final String FIELD_LAST_UPDATE = "lastUpdate";
     public static final String COLLECTION_DICTIONARIES = "dictionaries";
     public static final String COLLECTION_WORDS = "words";
 
     private String name;
     private String owner;
     private String lastUpdater;
+    private Date lastUpdate;
     private Map<String, Word> wordMap = new TreeMap<>();
 
     public CustomDictionary() {
@@ -30,13 +34,14 @@ public class CustomDictionary {
     }
 
     public CustomDictionary(String name, String owner, List<Word> words) {
-        this(name, owner, owner, words);
+        this(name, owner, owner, null, words);
     }
 
-    public CustomDictionary(String name, String owner, String lastUpdater, List<Word> words) {
+    public CustomDictionary(String name, String owner, String lastUpdater, Date lastUpdate, List<Word> words) {
         this.name = name;
         this.owner = owner;
         this.lastUpdater = lastUpdater;
+        this.lastUpdate = lastUpdate;
         for (Word w : words) {
             w.setCustomDictName(name);
             wordMap.put(w.getId(), w);
@@ -67,6 +72,14 @@ public class CustomDictionary {
         this.lastUpdater = lastUpdater;
     }
 
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     public Map<String, Word> getWordMap() {
         return wordMap;
     }
@@ -81,6 +94,7 @@ public class CustomDictionary {
                 "name='" + name + '\'' +
                 ", owner='" + owner + '\'' +
                 ", lastUpdater='" + lastUpdater + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 ", wordMap=" + wordMap +
                 '}';
     }
@@ -94,13 +108,19 @@ public class CustomDictionary {
                 snapshot.getId(),
                 snapshot.getString(FIELD_OWNER),
                 snapshot.getString(FIELD_LAST_UPDATER),
+                snapshot.getDate(FIELD_LAST_UPDATE),
                 new ArrayList<Word>());
     }
 
-    public Map<String, Object> toDocumentMap() {
+    public Map<String, Object> toDocumentMap(boolean useServerTimestamp) {
         Map<String, Object> map = new HashMap<>();
         map.put(FIELD_OWNER, getOwner());
         map.put(FIELD_LAST_UPDATER, getLastUpdater());
+        if (useServerTimestamp) {
+            map.put(FIELD_LAST_UPDATE, FieldValue.serverTimestamp());
+        } else {
+            map.put(FIELD_LAST_UPDATE, getLastUpdate());
+        }
         return map;
     }
 }

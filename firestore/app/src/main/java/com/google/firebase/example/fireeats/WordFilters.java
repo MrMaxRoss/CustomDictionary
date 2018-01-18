@@ -92,21 +92,21 @@ public class WordFilters {
         }
 
         if (hasOwner()) {
-            desc.append(String.format(context.getString(R.string.owned_by_format), owner));
+            desc.append(context.getString(R.string.owned_by_format, owner));
         }
 
         if (hasLastUpdater()) {
             if (desc.length() > 0) {
                 desc.append(" and ");
             }
-            desc.append(String.format(context.getString(R.string.last_updated_by_format), lastUpdater));
+            desc.append(context.getString(R.string.last_updated_by_format, lastUpdater));
         }
 
         if (hasPartOfSpeech()) {
             if (desc.length() > 0) {
                 desc.append(" and ");
             }
-            desc.append(String.format(context.getString(R.string.part_of_speech_format), partOfSpeech));
+            desc.append(context.getString(R.string.part_of_speech_format, partOfSpeech));
         }
 
         return desc.toString();

@@ -5,10 +5,8 @@ import android.support.annotation.WorkerThread;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.model.CustomDictionary;
 import com.google.firebase.example.fireeats.model.PartOfSpeech;
-import com.google.firebase.example.fireeats.model.Restaurant;
 import com.google.firebase.example.fireeats.model.Word;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -18,11 +16,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
-import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -91,8 +89,18 @@ public class DictionaryUtil {
                 getRandomName(random),
                 getRandomUser(random),
                 getRandomUser(random),
+                getRandomDate(random),
                 words);
         return dict;
+    }
+
+    private static Date getRandomDate(Random random) {
+        Calendar cal = new GregorianCalendar();
+        cal.set(Calendar.DAY_OF_YEAR, random.nextInt(365));
+        cal.set(Calendar.HOUR_OF_DAY, random.nextInt(24));
+        cal.set(Calendar.MINUTE, random.nextInt(60));
+        cal.set(Calendar.SECOND, random.nextInt(60));
+        return cal.getTime();
     }
 
     /**

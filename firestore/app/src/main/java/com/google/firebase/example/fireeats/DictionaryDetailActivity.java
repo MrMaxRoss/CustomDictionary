@@ -211,12 +211,14 @@ public class DictionaryDetailActivity extends AppCompatActivity
         // Create reference for new word, for use inside the transaction
         final DocumentReference wordRef = dictionaryRef.collection("words").document(word.getId());
 
-        // In a transaction, add the new word and update the aggregate totals
+        // In a transaction, add the new word and update aggregate totals on the dict and the last
+        // updated timestamp on the dict
         return mFirestore.runTransaction(new Transaction.Function<Void>() {
             @Override
             public Void apply(Transaction transaction) throws FirebaseFirestoreException {
-                Map<String, Object> wordMap = word.toWordMap();
+                Map<String, Object> wordMap = word.toWordMap(true);
                 CustomDictionary dict = transaction.get(dictionaryRef).toObject(CustomDictionary.class);
+                Map<String, Object> dictMap = dict.toDocumentMap(true);
 
                 // Compute new number of words
 //                int newNumRatings = dict.getNumberOfWords() + 1;
@@ -230,7 +232,7 @@ public class DictionaryDetailActivity extends AppCompatActivity
 //                restaurant.setAvgRating(newAvgRating);
 
                 // Commit to Firestore
-                transaction.set(dictionaryRef, dict);
+                transaction.set(dictionaryRef, dictMap);
                 transaction.set(wordRef, wordMap);
 
                 return null;

@@ -23,9 +23,7 @@ import butterknife.ButterKnife;
 public class DictionaryAdapter extends FirestoreAdapter<DictionaryAdapter.ViewHolder> {
 
     public interface OnDictionarySelectedListener {
-
         void onDictionarySelected(DocumentSnapshot dictionary);
-
     }
 
     private final DictionaryAdapter.OnDictionarySelectedListener mListener;
@@ -58,7 +56,7 @@ public class DictionaryAdapter extends FirestoreAdapter<DictionaryAdapter.ViewHo
         TextView ownerView;
 
         @BindView(R.id.dictionary_item_last_updater)
-        TextView lastUpdaterView;
+        TextView lastUpdateText;
 
 
         public ViewHolder(View itemView) {
@@ -80,7 +78,12 @@ public class DictionaryAdapter extends FirestoreAdapter<DictionaryAdapter.ViewHo
 
             titleView.setText(dict.getName());
             ownerView.setText(dict.getOwner());
-            lastUpdaterView.setText(dict.getLastUpdater());
+
+
+            lastUpdateText.setText(
+                    itemView.getContext().getString(R.string.message_dictionary_last_update_format,
+                            dict.getLastUpdater(),
+                            dict.getLastUpdate()));
 
             // Click listener
             itemView.setOnClickListener(new View.OnClickListener() {

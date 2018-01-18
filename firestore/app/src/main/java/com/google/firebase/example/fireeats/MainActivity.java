@@ -274,11 +274,12 @@ public class MainActivity extends AppCompatActivity implements
                     CustomDictionary.COLLECTION_DICTIONARIES).document(randomDictionary.getName());
 
             // Add dictionary
-            batch.set(dictRef, randomDictionary.toDocumentMap());
+            batch.set(dictRef, randomDictionary.toDocumentMap(true));
 
             // Add words to subcollection
             for (Word word : randomDictionary.getWordMap().values()) {
-                batch.set(dictRef.collection("words").document(word.getId()), word.toWordMap());
+                batch.set(dictRef.collection("words").document(
+                        word.getId()), word.toWordMap(true));
             }
         }
 
@@ -303,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onDictionary(CustomDictionary dict, final DictionaryDialogFragment frag) {
         DocumentReference dictRef = mFirestore.collection(
                 CustomDictionary.COLLECTION_DICTIONARIES).document(dict.getName());
-        Map<String, Object> dictMap = dict.toDocumentMap();
+        Map<String, Object> dictMap = dict.toDocumentMap(true);
         dictRef.set(dictMap)
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override

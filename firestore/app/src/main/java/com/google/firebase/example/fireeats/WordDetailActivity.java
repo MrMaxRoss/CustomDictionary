@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.example.fireeats.model.CustomDictionary;
 import com.google.firebase.example.fireeats.model.Word;
 import com.google.firebase.example.fireeats.util.ActivityUtil;
@@ -20,9 +19,6 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.Transaction;
-
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -166,7 +162,7 @@ public class WordDetailActivity extends AppCompatActivity
     @Override
     public void onWord(Word word, final WordDialogFragment frag) {
         // Edit the word
-        mWordRef.set(word.toWordMap())
+        mWordRef.set(word.toWordMap(true))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

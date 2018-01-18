@@ -73,7 +73,7 @@
         tools:text="Max" />
 
     <TextView
-        android:id="@+id/dictionary_item_last_updater_label"
+        android:id="@+id/dictionary_item_last_updater"
         style="@style/AppTheme.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,20 +83,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:textColor="@color/greySecondary"
-        android:text="@string/message_dictionary_last_updater"
-        tools:text="Last updated by" />
-
-    <TextView
-        android:id="@+id/dictionary_item_last_updater"
-        style="@style/AppTheme.Body1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/dictionary_item_last_updater_label"
-        android:layout_toRightOf="@+id/dictionary_item_last_updater_label"
-        android:layout_below="@+id/dictionary_item_owner"
-        android:layout_marginLeft="4dp"
-        android:layout_marginStart="4dp"
-        android:textColor="@color/greySecondary"
-        tools:text="Max" />
+        android:text="@string/message_dictionary_last_update_format"
+        tools:text="Last update by Max on Jan 17, 2018" />
 
 </RelativeLayout>
