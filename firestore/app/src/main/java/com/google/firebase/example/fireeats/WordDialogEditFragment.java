@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.example.fireeats.model.PartOfSpeech;
 import com.google.firebase.example.fireeats.model.Word;
 
@@ -26,7 +27,7 @@ public class WordDialogEditFragment extends WordDialogFragment {
     @BindView(R.id.word_edit_form_name)
     TextView mNameText;
 
-    @BindView(R.id.word_edit_form_owner)
+    @BindView(R.id.word_edit_form_owner_owned_by)
     TextView mOwnerText;
 
     Word word;
@@ -50,7 +51,7 @@ public class WordDialogEditFragment extends WordDialogFragment {
         if (word == null) {
             throw new IllegalArgumentException("Must pass in word");
         }
-        mOwnerText.setText(word.getOwner());
+        mOwnerText.setText(getString(R.string.message_word_owned_by_format, word.getOwner()));
         mDefinitionText.setText(word.getDefinition());
         mExampleSentenceText.setText(word.getExampleSentence());
         mPartOfSpeechSpinner.setSelection(word.getPartOfSpeech().ordinal());
@@ -62,14 +63,17 @@ public class WordDialogEditFragment extends WordDialogFragment {
     public void onSubmitClicked(View view) {
         PartOfSpeech partOfSpeech = PartOfSpeech.values()[mPartOfSpeechSpinner.getSelectedItemPosition()];
 
+        String lastUpdater = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         Word word = new Word(dictionaryId, mNameText.getText().toString(), mDefinitionText.getText().toString(),
-                mExampleSentenceText.getText().toString(), partOfSpeech, mOwnerText.getText().toString());
+                mExampleSentenceText.getText().toString(), partOfSpeech,
+                mOwnerText.getText().toString(), lastUpdater);
 
         if (mWordListener != null) {
-            mWordListener.onWord(word, this);
+            mWordListener.onWord(word);
         }
 
         dismiss();
+        clearFormFields();
     }
 
     public void setWord(Word word) {

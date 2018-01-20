@@ -40,6 +40,11 @@ public class Word implements Comparable<Word> {
         this(dictId, id, definition, exampleSentence, partOfSpeech, owner, owner, null);
     }
 
+    public Word(String dictId, String id, String definition, String exampleSentence,
+                PartOfSpeech partOfSpeech, String owner, String lastUpdater) {
+        this(dictId, id, definition, exampleSentence, partOfSpeech, owner, lastUpdater, null);
+    }
+
     Word(String dictId, String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech,
          String owner, String lastUpdater, Date lastUpdate) {
         this.customDictName = dictId;

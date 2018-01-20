@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onDictionary(CustomDictionary dict, final DictionaryDialogFragment frag) {
+    public void onDictionary(CustomDictionary dict) {
         DocumentReference dictRef = mFirestore.collection(
                 CustomDictionary.COLLECTION_DICTIONARIES).document(dict.getName());
         Map<String, Object> dictMap = dict.toDocumentMap(true);
@@ -314,7 +314,6 @@ public class MainActivity extends AppCompatActivity implements
                         // Hide keyboard and scroll to top
                         ActivityUtil.hideKeyboard(MainActivity.this);
                         mDictionariesRecycler.smoothScrollToPosition(0);
-                        frag.onSuccess();
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {

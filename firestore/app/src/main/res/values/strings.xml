@@ -81,6 +81,7 @@
     <string name="any_part_of_speech">Any part of speech</string>
     <string name="part_of_speech_format"><![CDATA[Part of speech is <b>%s</b>]]></string>
     <string name="message_word_last_update_format"><![CDATA[Last update by %s on %tD]]></string>
+    <string name="message_word_owned_by_format"><![CDATA[Owned by %s]]></string>
 
     <!-- Types of food I could think of in 5 minutes -->
     <string-array name="categories">

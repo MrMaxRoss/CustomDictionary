@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.google.firebase.example.fireeats.model.CustomDictionary;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -23,7 +22,7 @@ public abstract class DictionaryDialogFragment extends DialogFragment {
 
     interface DictionaryListener {
 
-        void onDictionary(CustomDictionary dict, DictionaryDialogFragment fragment);
+        void onDictionary(CustomDictionary dict);
 
     }
 
@@ -63,13 +62,5 @@ public abstract class DictionaryDialogFragment extends DialogFragment {
     @OnClick(R.id.dictionary_form_cancel)
     public void onCancelClicked(View view) {
         dismiss();
-    }
-
-    public final void onSuccess() {
-        onSuccessInternal();
-    }
-
-    public void onSuccessInternal() {
-        // default impl does nothing
     }
 }

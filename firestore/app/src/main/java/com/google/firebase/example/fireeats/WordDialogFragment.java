@@ -38,7 +38,7 @@ public abstract class WordDialogFragment extends DialogFragment {
 
     interface WordListener {
 
-        void onWord(Word word, WordDialogFragment fragment);
+        void onWord(Word word);
 
     }
 
@@ -91,14 +91,9 @@ public abstract class WordDialogFragment extends DialogFragment {
         dismiss();
     }
 
-    public final void onSuccess() {
+    void clearFormFields() {
         mDefinitionText.getText().clear();
         mExampleSentenceText.getText().clear();
         mPartOfSpeechSpinner.setSelection(0);
-        onSuccessInternal();
-    }
-
-    public void onSuccessInternal() {
-        // default impl does nothing
     }
 }

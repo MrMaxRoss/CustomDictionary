@@ -24,16 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/greySecondary"
-            android:text="@string/message_word_owned_by"
-            tools:text="By " />
-
-        <TextView
-            android:id="@+id/word_edit_form_owner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            tools:text="Max Ross"/>
-
+            android:text="@string/message_word_owned_by_format"
+            tools:text="By Max Ross" />
     </LinearLayout>
 
     <include layout="@layout/dialog_word_base"/>

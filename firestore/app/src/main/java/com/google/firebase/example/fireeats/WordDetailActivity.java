@@ -166,7 +166,7 @@ public class WordDetailActivity extends AppCompatActivity
     }
 
     @Override
-    public void onWord(Word word, final WordDialogFragment frag) {
+    public void onWord(Word word) {
         // Edit the word
         mWordRef.set(word.toWordMap(true))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
@@ -176,7 +176,6 @@ public class WordDetailActivity extends AppCompatActivity
 
                         // Hide keyboard and scroll to top
                         ActivityUtil.hideKeyboard(WordDetailActivity.this);
-                        frag.onSuccess();
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {

@@ -1,21 +1,14 @@
 package com.google.firebase.example.fireeats;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.example.fireeats.model.PartOfSpeech;
 import com.google.firebase.example.fireeats.model.Word;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -39,19 +32,23 @@ public class WordDialogCreateFragment extends WordDialogFragment {
     @OnClick(R.id.word_form_button)
     public void onSubmitClicked(View view) {
         PartOfSpeech partOfSpeech = PartOfSpeech.values()[mPartOfSpeechSpinner.getSelectedItemPosition()];
+        String owner = TextUtils.isEmpty(mOwnerText.getText()) ?
+                FirebaseAuth.getInstance().getCurrentUser().getDisplayName() :
+                mOwnerText.getText().toString();
 
         Word word = new Word(dictionaryId, mNameText.getText().toString(), mDefinitionText.getText().toString(),
-                mExampleSentenceText.getText().toString(), partOfSpeech, mOwnerText.getText().toString());
+                mExampleSentenceText.getText().toString(), partOfSpeech, owner, owner);
 
         if (mWordListener != null) {
-            mWordListener.onWord(word, this);
+            mWordListener.onWord(word);
         }
 
         dismiss();
+        clearFormFields();
     }
 
-    @Override
-    public void onSuccessInternal() {
+    void clearFormFields() {
+        super.clearFormFields();
         mNameText.getText().clear();
         mOwnerText.getText().clear();
     }

@@ -180,7 +180,7 @@ public class DictionaryDetailActivity extends AppCompatActivity
     }
 
     @Override
-    public void onWord(Word word, final WordDialogFragment frag) {
+    public void onWord(Word word) {
         // In a transaction, add the new word and update the aggregate totals
         addWord(mDictionaryRef, word)
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
@@ -191,7 +191,6 @@ public class DictionaryDetailActivity extends AppCompatActivity
                         // Hide keyboard and scroll to top
                         ActivityUtil.hideKeyboard(DictionaryDetailActivity.this);
                         mWordsRecycler.smoothScrollToPosition(0);
-                        frag.onSuccess();
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
