@@ -43,10 +43,12 @@
     <string name="sort_by_word_id">Sort By Word</string>
     <string name="sort_by_word_owner">Sort By Owner</string>
     <string name="sort_by_word_last_updater">Sort By Last Updater</string>
+    <string name="sort_by_word_most_recent_update">Sort By Most Recent Update</string>
     <string name="sort_by_word_part_of_speech">Sort By Part Of Speech</string>
     <string name="sort_by_dictionary_owner">Sort By Owner</string>
     <string name="sort_by_dictionary_title">Sort By Title</string>
     <string name="sort_by_dictionary_last_updater">Sort By Last Updater</string>
+    <string name="sort_by_dictionary_most_recent_update">Sort By Most Recent Update</string>
     <string name="dictionary_item_image_content_desc">Image for the dictionary</string>
     <string name="message_no_words">Be the first to create a word!</string>
     <string name="filter_add_word">Add word</string>
@@ -65,7 +67,7 @@
     <string name="add_random_dictionaries">Add Random Dictionaries</string>
     <string name="message_dictionary_owned_by">By </string>
     <string name="message_dictionary_last_update_format">Last update by %s on %tD</string>
-    <string name="message_word_owned_by">By </string>
+    <string name="message_word_owned_by">Owned By </string>
     <string name="message_word_example_sentence">Example:</string>
     <string name="message_word_definition">Definition:</string>
     <string name="hint_dictionary_filter_last_updater">Last Updater</string>
@@ -78,6 +80,7 @@
     <string name="last_updated_by_format"><![CDATA[Last updated by <b>%s</b>]]></string>
     <string name="any_part_of_speech">Any part of speech</string>
     <string name="part_of_speech_format"><![CDATA[Part of speech is <b>%s</b>]]></string>
+    <string name="message_word_last_update_format"><![CDATA[Last update by %s on %tD]]></string>
 
     <!-- Types of food I could think of in 5 minutes -->
     <string-array name="categories">
@@ -170,6 +173,7 @@
     <string-array name="dictionary_sort_by">
         <item>@string/sort_by_dictionary_owner</item>
         <item>@string/sort_by_dictionary_last_updater</item>
+        <item>@string/sort_by_dictionary_most_recent_update</item>
         <item>@string/sort_by_dictionary_title</item>
     </string-array>
 
@@ -177,6 +181,7 @@
         <item>@string/sort_by_word_id</item>
         <item>@string/sort_by_word_owner</item>
         <item>@string/sort_by_word_last_updater</item>
+        <item>@string/sort_by_word_most_recent_update</item>
         <item>@string/sort_by_word_part_of_speech</item>
     </string-array>
 a

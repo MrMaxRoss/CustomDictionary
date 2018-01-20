@@ -65,7 +65,7 @@
             style="@style/AppTheme.Subheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/word_image"
+            android:layout_above="@+id/word_last_update_text"
             android:layout_alignLeft="@+id/word_name"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
@@ -78,7 +78,7 @@
             style="@style/AppTheme.Subheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/word_image"
+            android:layout_above="@+id/word_last_update_text"
             android:layout_toRightOf="@+id/word_owner_owned_by"
             android:layout_marginLeft="4dp"
             android:layout_marginBottom="8dp"
@@ -86,6 +86,18 @@
             android:textColor="@android:color/white"
             tools:text="Max Ross" />
 
+        <TextView
+            android:id="@+id/word_last_update_text"
+            style="@style/AppTheme.Subheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/word_image"
+            android:layout_alignLeft="@+id/word_owner_owned_by"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:text="@string/message_word_last_update_format"
+            tools:text="Last update by Max Ross on Jan 19, 2018" />
 
     </RelativeLayout>
 

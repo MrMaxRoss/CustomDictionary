@@ -120,6 +120,8 @@ public class WordFilterDialogFragment extends DialogFragment {
             return Word.FIELD_OWNER;
         } else if (getString(R.string.sort_by_word_last_updater).equals(selected)) {
             return Word.FIELD_LAST_UPDATER;
+        } else if (getString(R.string.sort_by_word_most_recent_update).equals(selected)) {
+            return Word.FIELD_LAST_UPDATE;
         } else if (getString(R.string.sort_by_word_part_of_speech).equals(selected)) {
             return Word.FIELD_PART_OF_SPEECH;
         } else if (getString(R.string.sort_by_word_id).equals(selected)) {
@@ -136,6 +138,8 @@ public class WordFilterDialogFragment extends DialogFragment {
             return Query.Direction.ASCENDING;
         } else if (getString(R.string.sort_by_word_last_updater).equals(selected)) {
             return Query.Direction.ASCENDING;
+        } else if (getString(R.string.sort_by_word_most_recent_update).equals(selected)) {
+            return Query.Direction.DESCENDING;
         } else if (getString(R.string.sort_by_word_part_of_speech).equals(selected)) {
             return Query.Direction.ASCENDING;
         } else if (getString(R.string.sort_by_word_id).equals(selected)) {

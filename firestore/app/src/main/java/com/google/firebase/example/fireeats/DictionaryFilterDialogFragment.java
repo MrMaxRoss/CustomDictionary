@@ -99,6 +99,8 @@ public class DictionaryFilterDialogFragment extends DialogFragment {
             return CustomDictionary.FIELD_OWNER;
         } else if (getString(R.string.sort_by_dictionary_last_updater).equals(selected)) {
             return CustomDictionary.FIELD_LAST_UPDATER;
+        } else if (getString(R.string.sort_by_dictionary_most_recent_update).equals(selected)) {
+            return CustomDictionary.FIELD_LAST_UPDATE;
         } else if (getString(R.string.sort_by_dictionary_title).equals(selected)) {
             // This is the default sort, so return nothing.
             return null;
@@ -113,6 +115,8 @@ public class DictionaryFilterDialogFragment extends DialogFragment {
             return Query.Direction.ASCENDING;
         } else if (getString(R.string.sort_by_dictionary_last_updater).equals(selected)) {
             return Query.Direction.ASCENDING;
+        } else if (getString(R.string.sort_by_dictionary_most_recent_update).equals(selected)) {
+            return Query.Direction.DESCENDING;
         } else if (getString(R.string.sort_by_dictionary_title).equals(selected)) {
             return Query.Direction.ASCENDING;
         }

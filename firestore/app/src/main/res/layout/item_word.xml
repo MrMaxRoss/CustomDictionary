@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/word_item_name"
-        style="@style/AppTheme.Body1"
+        style="@style/AppTheme.WordListWordName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/word_divider"
@@ -76,6 +76,16 @@
         android:layout_toRightOf="@id/word_item_owner_owned_by"
         android:layout_marginLeft="4dp"
         tools:text="Max Ross" />
+
+    <TextView
+        android:id="@+id/word_item_last_updater"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_item_name"
+        android:textColor="@color/greySecondary"
+        android:text="@string/message_word_last_update_format"
+        tools:text="Last update by Max on Jan 17, 2018" />
 
 
 </RelativeLayout>

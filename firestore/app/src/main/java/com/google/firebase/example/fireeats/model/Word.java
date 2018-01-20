@@ -49,6 +49,7 @@ public class Word implements Comparable<Word> {
         this.partOfSpeech = partOfSpeech;
         this.owner = owner;
         this.lastUpdater = lastUpdater;
+        this.lastUpdate = lastUpdate;
     }
 
     public Word(String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech, String owner) {

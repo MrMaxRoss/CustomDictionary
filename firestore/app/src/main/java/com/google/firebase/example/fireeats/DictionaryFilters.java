@@ -94,6 +94,8 @@ public class DictionaryFilters {
             return context.getString(R.string.sort_by_dictionary_owner);
         } else if (CustomDictionary.FIELD_LAST_UPDATER.equals(sortBy)) {
             return context.getString(R.string.sort_by_dictionary_last_updater);
+        } else if (CustomDictionary.FIELD_LAST_UPDATE.equals(sortBy)) {
+            return context.getString(R.string.sort_by_dictionary_most_recent_update);
         } else {
             return context.getString(R.string.sort_by_dictionary_title);
         }

@@ -39,6 +39,9 @@ public class WordDetailActivity extends AppCompatActivity
     @BindView(R.id.word_owner)
     TextView ownerView;
 
+    @BindView(R.id.word_last_update_text)
+    TextView lastUpdateView;
+
     @BindView(R.id.word_definition)
     TextView definitionView;
 
@@ -124,6 +127,9 @@ public class WordDetailActivity extends AppCompatActivity
         definitionView.setText(word.getDefinition());
         exampleSentenceView.setText((word.getExampleSentence()));
         partOfSpeechView.setText(String.format("(%s)", word.getPartOfSpeech().getDisplay()));
+        lastUpdateView.setText(getString(R.string.message_word_last_update_format,
+                word.getLastUpdater(),
+                word.getLastUpdate()));
 
         mWordDialog.setWord(word); // this is probably the wrong way to do it
     }

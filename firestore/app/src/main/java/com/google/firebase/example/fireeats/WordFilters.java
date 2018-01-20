@@ -117,6 +117,8 @@ public class WordFilters {
             return context.getString(R.string.sort_by_word_owner);
         } else if (Word.FIELD_LAST_UPDATER.equals(sortBy)) {
             return context.getString(R.string.sort_by_word_last_updater);
+        } else if (Word.FIELD_LAST_UPDATE.equals(sortBy)) {
+            return context.getString(R.string.sort_by_word_most_recent_update);
         } else if (Word.FIELD_PART_OF_SPEECH.equals(sortBy)) {
             return context.getString(R.string.sort_by_word_last_updater);
         } else {

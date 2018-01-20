@@ -11,7 +11,6 @@ import com.google.firebase.example.fireeats.model.Word;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -52,12 +51,9 @@ public class WordAdapter extends FirestoreAdapter<WordAdapter.ViewHolder> {
         @BindView(R.id.word_item_owner)
         TextView ownerView;
 
-//        @BindView(R.id.word_item_definition)
-//        TextView definitionView;
-//
-//        @BindView(R.id.word_item_example_sentence)
-//        TextView exampleSentenceView;
-//
+        @BindView(R.id.word_item_last_updater)
+        TextView lastUpdaterView;
+
         @BindView(R.id.word_item_part_of_speech)
         TextView partOfSpeechView;
 
@@ -73,6 +69,9 @@ public class WordAdapter extends FirestoreAdapter<WordAdapter.ViewHolder> {
             nameView.setText(word.getId());
             ownerView.setText(word.getOwner());
             partOfSpeechView.setText(word.getPartOfSpeech().getDisplay());
+            lastUpdaterView.setText(itemView.getContext().getString(R.string.message_word_last_update_format,
+                    word.getLastUpdater(),
+                    word.getLastUpdate()));
 
             // Click listener
             itemView.setOnClickListener(new View.OnClickListener() {
