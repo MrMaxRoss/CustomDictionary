@@ -30,7 +30,7 @@ public class WordDialogEditFragment extends WordDialogFragment {
     @BindView(R.id.word_edit_form_owner_owned_by)
     TextView mOwnerText;
 
-    Word word;
+    Word existingWord;
 
     @Override
     protected int getLayout() {
@@ -48,13 +48,13 @@ public class WordDialogEditFragment extends WordDialogFragment {
         }
         mNameText.setText(String.format(mNameText.getText().toString(), wordId));
 
-        if (word == null) {
+        if (existingWord == null) {
             throw new IllegalArgumentException("Must pass in word");
         }
-        mOwnerText.setText(getString(R.string.message_word_owned_by_format, word.getOwner()));
-        mDefinitionText.setText(word.getDefinition());
-        mExampleSentenceText.setText(word.getExampleSentence());
-        mPartOfSpeechSpinner.setSelection(word.getPartOfSpeech().ordinal());
+        mOwnerText.setText(getString(R.string.message_word_owned_by_format, existingWord.getOwner()));
+        mDefinitionText.setText(existingWord.getDefinition());
+        mExampleSentenceText.setText(existingWord.getExampleSentence());
+        mPartOfSpeechSpinner.setSelection(existingWord.getPartOfSpeech().ordinal());
 
         return v;
     }
@@ -64,9 +64,9 @@ public class WordDialogEditFragment extends WordDialogFragment {
         PartOfSpeech partOfSpeech = PartOfSpeech.values()[mPartOfSpeechSpinner.getSelectedItemPosition()];
 
         String lastUpdater = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        Word word = new Word(dictionaryId, mNameText.getText().toString(), mDefinitionText.getText().toString(),
+        Word word = new Word(dictionaryId, existingWord.getId(), mDefinitionText.getText().toString(),
                 mExampleSentenceText.getText().toString(), partOfSpeech,
-                mOwnerText.getText().toString(), lastUpdater);
+                existingWord.getOwner(), existingWord.getOwnerEmail(), lastUpdater);
 
         if (mWordListener != null) {
             mWordListener.onWord(word);
@@ -77,6 +77,6 @@ public class WordDialogEditFragment extends WordDialogFragment {
     }
 
     public void setWord(Word word) {
-        this.word = word;
+        this.existingWord = word;
     }
 }

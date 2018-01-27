@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.model.PartOfSpeech;
 import com.google.firebase.example.fireeats.model.Word;
 
@@ -32,12 +33,14 @@ public class WordDialogCreateFragment extends WordDialogFragment {
     @OnClick(R.id.word_form_button)
     public void onSubmitClicked(View view) {
         PartOfSpeech partOfSpeech = PartOfSpeech.values()[mPartOfSpeechSpinner.getSelectedItemPosition()];
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String owner = TextUtils.isEmpty(mOwnerText.getText()) ?
-                FirebaseAuth.getInstance().getCurrentUser().getDisplayName() :
+                user.getDisplayName() :
                 mOwnerText.getText().toString();
 
         Word word = new Word(dictionaryId, mNameText.getText().toString(), mDefinitionText.getText().toString(),
-                mExampleSentenceText.getText().toString(), partOfSpeech, owner, owner);
+                mExampleSentenceText.getText().toString(), partOfSpeech, owner, user.getEmail(),
+                owner);
 
         if (mWordListener != null) {
             mWordListener.onWord(word);

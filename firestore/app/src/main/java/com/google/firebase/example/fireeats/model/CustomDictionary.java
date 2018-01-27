@@ -18,6 +18,7 @@ public class CustomDictionary {
 
     public static final String FIELD_TITLE = "__name__";
     public static final String FIELD_OWNER = "owner";
+    public static final String FIELD_OWNER_EMAIL = "ownerEmail";
     public static final String FIELD_LAST_UPDATER = "lastUpdater";
     public static final String FIELD_LAST_UPDATE = "lastUpdate";
     public static final String COLLECTION_DICTIONARIES = "dictionaries";
@@ -25,6 +26,7 @@ public class CustomDictionary {
 
     private String name;
     private String owner;
+    private String ownerEmail;
     private String lastUpdater;
     private Date lastUpdate;
     private Map<String, Word> wordMap = new TreeMap<>();
@@ -33,13 +35,15 @@ public class CustomDictionary {
 
     }
 
-    public CustomDictionary(String name, String owner, List<Word> words) {
-        this(name, owner, owner, null, words);
+    public CustomDictionary(String name, String owner, String ownerEmail, List<Word> words) {
+        this(name, owner, owner, null, null, words);
     }
 
-    public CustomDictionary(String name, String owner, String lastUpdater, Date lastUpdate, List<Word> words) {
+    public CustomDictionary(String name, String owner, String ownerEmail, String lastUpdater,
+                            Date lastUpdate, List<Word> words) {
         this.name = name;
         this.owner = owner;
+        this.ownerEmail = ownerEmail;
         this.lastUpdater = lastUpdater;
         this.lastUpdate = lastUpdate;
         for (Word w : words) {
@@ -62,6 +66,14 @@ public class CustomDictionary {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
     }
 
     public String getLastUpdater() {
@@ -93,6 +105,7 @@ public class CustomDictionary {
         return "CustomDictionary{" +
                 "name='" + name + '\'' +
                 ", owner='" + owner + '\'' +
+                ", owner='" + ownerEmail + '\'' +
                 ", lastUpdater='" + lastUpdater + '\'' +
                 ", lastUpdate='" + lastUpdate + '\'' +
                 ", wordMap=" + wordMap +
@@ -107,6 +120,7 @@ public class CustomDictionary {
         return new CustomDictionary(
                 snapshot.getId(),
                 snapshot.getString(FIELD_OWNER),
+                snapshot.getString(FIELD_OWNER_EMAIL),
                 snapshot.getString(FIELD_LAST_UPDATER),
                 snapshot.getDate(FIELD_LAST_UPDATE),
                 new ArrayList<Word>());
@@ -115,6 +129,7 @@ public class CustomDictionary {
     public Map<String, Object> toDocumentMap(boolean useServerTimestamp) {
         Map<String, Object> map = new HashMap<>();
         map.put(FIELD_OWNER, getOwner());
+        map.put(FIELD_OWNER_EMAIL, getOwnerEmail());
         map.put(FIELD_LAST_UPDATER, getLastUpdater());
         if (useServerTimestamp) {
             map.put(FIELD_LAST_UPDATE, FieldValue.serverTimestamp());

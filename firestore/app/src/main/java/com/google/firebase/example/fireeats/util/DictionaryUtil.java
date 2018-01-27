@@ -85,9 +85,11 @@ public class DictionaryUtil {
     public static CustomDictionary getRandomDictionary(Context context) {
         Random random = new Random();
         List<Word> words = getRandomWordList(random.nextInt(10));
+        String randomOwner = getRandomUser(random);
         CustomDictionary dict = new CustomDictionary(
                 getRandomName(random),
                 getRandomUser(random),
+                randomOwner + "@sortedunderbelly.com",
                 getRandomUser(random),
                 getRandomDate(random),
                 words);
@@ -204,10 +206,12 @@ public class DictionaryUtil {
         Random random = new Random();
 
         String wordName = WORDS[random.nextInt(WORDS.length)] + random.nextInt(100);
-        return new Word(wordName,
+        String owner = getRandomUser(random);
+        return new Word(null, wordName,
                 "This is the definition",
                 String.format("One time I went to the park and saw a %s.", wordName),
-                getRandomPartOfSpeech(random), getRandomUser(random));
+                getRandomPartOfSpeech(random), owner, owner + "@sortedunderbelly.com",
+                owner);
     }
 
     private static PartOfSpeech getRandomPartOfSpeech(Random random) {

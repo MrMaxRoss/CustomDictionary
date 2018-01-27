@@ -17,6 +17,7 @@ public class Word implements Comparable<Word> {
 
     public static final String FIELD_ID = "__name__";
     public static final String FIELD_OWNER = "owner";
+    public static final String FIELD_OWNER_EMAIL = "ownerEmail";
     public static final String FIELD_LAST_UPDATER = "last_updater";
     public static final String FIELD_LAST_UPDATE = "last_update";
     public static final String FIELD_DEFINITION = "definition";
@@ -30,35 +31,34 @@ public class Word implements Comparable<Word> {
     String exampleSentence;
     PartOfSpeech partOfSpeech;
     String owner;
+    String ownerEmail;
     String lastUpdater;
     Date lastUpdate;
 
     public Word() {
     }
 
-    public Word(String dictId, String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech, String owner) {
-        this(dictId, id, definition, exampleSentence, partOfSpeech, owner, owner, null);
+    public Word(String dictId, String id, String definition, String exampleSentence,
+                PartOfSpeech partOfSpeech, String owner, String ownerEmail, String lastUpdater) {
+        this(dictId, id, definition, exampleSentence, partOfSpeech, owner, ownerEmail, lastUpdater, null);
     }
 
-    public Word(String dictId, String id, String definition, String exampleSentence,
-                PartOfSpeech partOfSpeech, String owner, String lastUpdater) {
-        this(dictId, id, definition, exampleSentence, partOfSpeech, owner, lastUpdater, null);
+    public Word(String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech,
+                String owner, String ownerEmail) {
+        this(null, id, definition, exampleSentence, partOfSpeech, owner, ownerEmail, null);
     }
 
     Word(String dictId, String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech,
-         String owner, String lastUpdater, Date lastUpdate) {
+         String owner, String ownerEmail, String lastUpdater, Date lastUpdate) {
         this.customDictName = dictId;
         this.id = id;
         this.definition = definition;
         this.exampleSentence = exampleSentence;
         this.partOfSpeech = partOfSpeech;
         this.owner = owner;
+        this.ownerEmail = ownerEmail;
         this.lastUpdater = lastUpdater;
         this.lastUpdate = lastUpdate;
-    }
-
-    public Word(String id, String definition, String exampleSentence, PartOfSpeech partOfSpeech, String owner) {
-        this(null, id, definition, exampleSentence, partOfSpeech, owner);
     }
 
 
@@ -109,6 +109,14 @@ public class Word implements Comparable<Word> {
         this.owner = owner;
     }
 
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
+    }
+
     public String getLastUpdater() {
         return lastUpdater;
     }
@@ -134,6 +142,7 @@ public class Word implements Comparable<Word> {
                 ", exampleSentence='" + exampleSentence + '\'' +
                 ", partOfSpeech=" + partOfSpeech +
                 ", owner='" + owner + '\'' +
+                ", ownerEmail='" + ownerEmail + '\'' +
                 ", lastUpdater='" + lastUpdater + '\'' +
                 ", lastUpdate='" + lastUpdate + '\'' +
                 '}';
@@ -147,6 +156,7 @@ public class Word implements Comparable<Word> {
     public Map<String, Object> toWordMap(boolean useServerTimestamp) {
         Map<String, Object> map = new HashMap<>();
         map.put(FIELD_OWNER, getOwner());
+        map.put(FIELD_OWNER_EMAIL, getOwnerEmail());
         map.put(FIELD_LAST_UPDATER, getLastUpdater());
         map.put(FIELD_PART_OF_SPEECH, getPartOfSpeech().name());
         map.put(FIELD_DEFINITION, getDefinition());
@@ -169,6 +179,7 @@ public class Word implements Comparable<Word> {
                 (String) snapshot.get(FIELD_EXAMPLE_SENTENCE),
                 PartOfSpeech.valueOf((String) snapshot.get(FIELD_PART_OF_SPEECH)),
                 (String) snapshot.get(FIELD_OWNER),
+                (String) snapshot.get(FIELD_OWNER_EMAIL),
                 (String) snapshot.get(FIELD_LAST_UPDATER),
                 (Date) snapshot.get(FIELD_LAST_UPDATE));
 
